@@ -1,0 +1,103 @@
+#define F_CPU	16000000UL
+
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include <util/delay.h>
+
+#define SENSOR1 PC0
+#define SENSOR2 PC1
+#define SENSOR3 PC2
+#define SENSOR4 PC3
+
+
+#define MOTOR_LEFT_FORWARD PD0
+#define MOTOR_LEFT_BACKWARD PD1
+#define LEFT_MOTOR_SPEED OCR1B
+#define RIGHT_MOTOR_SPEED OCR1A
+#define MOTOR_RIGHT_FORWARD PD6
+#define MOTOR_RIGHT_BACKWARD PD7
+#define
+// Check sensors 1 means that sensor didn't detect black
+uint8_t readSensors() {
+	uint8_t sensors_values = 0000;
+	if (bit_is_clear(PINC, SENSOR1)) sensors_values |= 1<<3;
+	if (bit_is_clear(PINC, SENSOR2)) sensors_values |= 1<<2;
+	if (bit_is_clear(PINC, SENSOR3)) sensors_values |= 1<<1;
+	if (bit_is_clear(PINC, SENSOR4)) sensors_values |= 1<<0;
+	return sensors_values;
+}
+
+void setupPWMandMOTORS() {
+
+	DDRD |= (
+				(1 << DDD0) |
+				(1 << DDD1) |
+				(1 << DDD4) |
+				(1 << DDD5) |
+				(1 << DDD6) |
+				(1 << DDD7));
+
+	MOTOR_LEFT_FORWARD = 1;
+	MOTOR_RIGHT_FORWARD = 1;
+
+	DDRD |= (1 << PD4) | (1 << PD5); // set PWM pins as outputs
+	TCCR1A |= (1 << COM1A1) | (1 << COM1B1) | (1 << WGM11); // Fast PWM, non-inverted mode
+	TCCR1B |= (1 << WGM13) | (1 << WGM12) | (1 << CS11); // Fast PWM, 8-bit resolution, prescaler = 8
+}
+
+void setupSensors() {
+	DDRC &= ~( (1 << DDC0) |
+				(1 << DDC1) |
+				(1 << DDC2) |
+				(1 << DDC3) );
+}
+
+void controlMotors(uint8_t sensorsBits) {
+	uint8_t pelnaPIZDA = 255;
+	uint8_t sredniaPIZDA = 128;
+	uint8_t malaPIZDA = 64;
+	uint8_t stopPIZDA = 0;
+
+	if (sensorsBits == 1111) {
+		RIGHT_MOTOR_SPEED = pelnaPIZDA;
+		LEFT_MOTOR_SPEED = pelnaPIZDA;
+	}
+	if (sensorsBits == 1110 || sensorsBits == 1100) {
+		RIGHT_MOTOR_SPEED = malaPIZDA;
+		LEFT_MOTOR_SPEED = pelnaPIZDA;
+	}
+	if (sensorsBits == 1101) {
+		RIGHT_MOTOR_SPEED = sredniaPIZDA;
+		LEFT_MOTOR_SPEED = pelnaPIZDA;
+	}
+	if (sensorsBits == 0111 || sensorsBits == 0011) {
+		RIGHT_MOTOR_SPEED = pelnaPIZDA;
+		LEFT_MOTOR_SPEED = malaPIZDA;
+	}
+	if (sensorsBits == 1011) {
+		RIGHT_MOTOR_SPEED = pelnaPIZDA;
+		LEFT_MOTOR_SPEED = sredniaPIZDA;
+	}
+	if (sensorsBits == 0000) {
+		RIGHT_MOTOR_SPEED = stopPIZDA;
+		LEFT_MOTOR_SPEED = stopPIZDA;
+		//sprawdzenie czy to nie skrzyżowanie
+	}
+
+}
+
+
+int main(void)
+{
+
+	setupPWMandMOTORS();
+	setupSensors();
+
+	while (1)
+	{
+	   uint8_t sensors = readSensors();
+
+	   controlMotors(sensors);
+	   _delay_ms(6);
+	}
+}

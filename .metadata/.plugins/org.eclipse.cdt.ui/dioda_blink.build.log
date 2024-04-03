@@ -1,0 +1,9 @@
+20:03:00 **** Build of configuration Release for project dioda_blink ****
+make all 
+Cannot run program "make": Launching failed
+
+Error: Program "make" not found in PATH
+PATH=[C:\Users\karko\OneDrive\Dokumenty\MkClipse\AVR Toolchain\bin;C:\Users\karko\OneDrive\Dokumenty\MkClipse\AVR Toolchain\bin;C:/eclipse//plugins/org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.6.v20230204-1729/jre/bin/server;C:/eclipse//plugins/org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.6.v20230204-1729/jre/bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\VMware\VMware Player\bin\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\dotnet\;C:\Program Files\nodejs\;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\Git\cmd;C:\Program Files\Java\jdk-19;C:\msys64\mingw64\bin;;%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;%SYSTEMROOT%\System32\WindowsPowerShell\v1.0\;%SYSTEMROOT%\System32\OpenSSH\;C:\Users\rtoit\AppData\Local\Programs\Python\Python311\Scripts\;C:\Users\rtoit\AppData\Local\Programs\Python\Python311\;C:\Users\rtoit\AppData\Local\Microsoft\WindowsApps;C:\Users\rtoit\.dotnet\tools;C:\Users\rtoit\AppData\Local\JetBrains\Toolbox\scripts;;C:\Users\rtoit\AppData\Roaming\npm;C:\Users\rtoit\AppData\Local\Programs\Microsoft VS Code\bin;%USERPROFILE%\AppData\Local\Microsoft\WindowsApps;C:\eclipse]
+
+20:03:00 Build Finished. 0 errors, 0 warnings. (took 39ms)
+

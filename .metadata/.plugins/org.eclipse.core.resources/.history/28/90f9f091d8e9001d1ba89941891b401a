@@ -1,0 +1,67 @@
+#define F_CPU	16000000UL
+
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include <util/delay.h>
+
+#define SENSOR1 PC0
+#define SENSOR2 PC1
+#define SENSOR3 PC2
+#define SENSOR4 PC3
+
+#define MOTOR_LEFT_FORWARD PD4
+#define MOTOR_LEFT_BACKWARD PD5
+#define MOTOR_RIGHT_FORWARD PD6
+#define MOTOR_RIGHT_BACKWARD PD7
+
+// Check sensors 1 means that sensor didn't detect black
+uint8_t readSensors() {
+	uint8_t sensors_values = 0;
+	if (bit_is_clear(PINC, SENSOR1)) sensors_values |= 1<<3;
+	if (bit_is_clear(PINC, SENSOR2)) sensors_values |= 1<<2;
+	if (bit_is_clear(PINC, SENSOR3)) sensors_values |= 1<<1;
+	if (bit_is_clear(PINC, SENSOR4)) sensors_values |= 1<<0;
+	return sensors_values;
+}
+
+
+int main(void)
+{
+//	data direction register D as output
+	DDRD |= (
+			(1 << DDD0) |
+			(1 << DDD1) |
+			(1 << DDD4) |
+			(1 << DDD5) |
+			(1 << DDD6) |
+			(1 << DDD7));
+//	kutas sperma cipka dupeczka
+//	silnik enable
+	PD0 = 1;
+	PD1 = 1;
+
+	// set PORT0-3 AS INPUT
+	//	DDRC = 00000000; moze tak??
+	DDRC &= ~( (1 << DDC0) |
+			(1 << DDC1) |
+			(1 << DDC2) |
+			(1 << DDC3) );
+
+	    while (1)
+	    {
+	       uint8_t sensors = readSensors();
+
+	       if ((sensors | 1110) == 1110) {
+//	    	   mocno w prawo
+	       }
+	       if ((sensors | 1101) == 1101) {
+//	    	   lekko w prawoa
+	       }
+	       if ((sensors | 0111) == 0111) {
+//	    	   mocno w lewo
+	       }
+	       if ((sensors | 1011) -- 1011) {
+//	    	   lekko w lewo
+	       }
+	    }
+}

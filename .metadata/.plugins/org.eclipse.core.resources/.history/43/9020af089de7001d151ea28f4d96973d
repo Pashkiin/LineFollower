@@ -1,0 +1,33 @@
+#define F_CPU	16000000UL
+
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include <util/delay.h>
+
+int main(void)
+{
+	DDRD = (1 << PORTD6);
+	DDRB = (1 << PB0);
+
+	TCCR0A = (1 << COM0A1) | (1 << WGM00) | (1 << WGM01);
+	sei();
+
+	TCCR0B = (1<<CS00);
+
+	unsigned char duty;
+
+
+	    while (1)
+	    {
+	        for(duty=120; duty<255; duty++)
+	        {
+	            OCR0A=duty;  /*increase the LED light intensity*/
+	            _delay_ms(6);
+	        }
+	        for(duty=255; duty>120; duty--)
+	        {
+	            OCR0A=duty;  /*decrease the LED light intensity*/
+	            _delay_ms(6);
+	        }
+	    }
+}

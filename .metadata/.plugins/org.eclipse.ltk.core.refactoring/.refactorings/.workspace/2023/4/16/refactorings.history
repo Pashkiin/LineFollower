@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;dioda_blink&apos;" deleteContents="true" description="Delete resource &apos;dioda_blink&apos;" element1="/dioda_blink" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1682014072536"/>
+</session>
